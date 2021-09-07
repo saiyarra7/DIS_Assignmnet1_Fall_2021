@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 
 namespace DIS_Assignmnet1_Fall_2021
@@ -89,9 +90,41 @@ namespace DIS_Assignmnet1_Fall_2021
         */
         private static bool HalvesAreAlike(string s)
         {
+            
+
             try
             {
                 // write your code here
+                // For this question we can simply caliculate the number of vowels in the first half of the string
+                //and perform the same for second half of the string and if the count is same then we can say they are equal.
+                s = s.ToLower();
+                int half = s.Length / 2;
+                int countfh = 0;
+                int countsh = 0;
+                for (int i = 0; i < half; i++)
+                {
+                    if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')
+                    {
+                        countfh++;
+                    }
+                }
+
+                for (int i = half; i < s.Length; i++)
+                {
+                    if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')
+
+                    {
+                        countsh++;
+                    }
+                }
+                if (countfh == countsh)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
                 return false;
             }
             catch (Exception)
@@ -118,7 +151,22 @@ Note: Use of String function (Contains) and hasmap is not allowed, think of othe
             try
             {
                 // write your code here.
-                return false;
+                /*This is slighty tricky as we are not supposed to use any inbuilt methods, We can use the ASCI values to check if all the charaters are present in the string.
+                 * and that is how the compiler compares characters as well*/
+                int[] count = new int[26];
+                foreach(char c in s) 
+                {
+                    count[c - 'a']++; //The Asci values for characters start from a=97 and so forth. so here when we subtract each character in the string with
+                                      //a's asci value(97) and increment it,and then check if every alphabet is present in the string by simply checking if the count[i]
+                                      // is more than 1 if not it means the alphabet is not present in the string.
+                }
+                foreach (char x in count)
+                {
+                    if (x == 0)
+                        return false;
+                }
+                return true;
+
             }
             catch (Exception)
             {
@@ -146,9 +194,29 @@ Note: Use of String function (Contains) and hasmap is not allowed, think of othe
             try
             {
                 // write your code here
-                return 0;
+                //As this is a stright forward question we can sumup all the values for each customer. i.e sum of all items in row i and check which row, i.e i has the 
+                //highest value.
+                {
+                    int max = 0;
+                    
+                    for (int i = 0; i < accounts.Length; i++)
+                    {
+                        int temp = 0;
+                        for (int j=0;j<accounts[i].Length;j++)
+                        {
+                            temp = temp + accounts[i][j];
+                        }
+                        if (temp > max)
+                            max = temp;
+                    }
+
+                    return max;
+                }
+
+
 
             }
+           
             catch (Exception)
             {
                 throw;
@@ -178,7 +246,18 @@ Constraints:
             try
             {
                 // write your code here.
-                return 0;
+                int count = 0;
+                for (int i=0;i< jewels.Length;i++)
+                {
+                    for(int j=0;j<stones.Length; j++)
+                    {
+                        if (jewels[j]== stones[i])
+                        {
+                            count++;
+                        }
+                    }
+                }
+                return count;
             }
             catch (Exception e)
             {
@@ -208,7 +287,15 @@ Constraints:
             try
             {
                 // write your code here.
-                return "null";
+                int n = s.Length;
+                char[] temp = new char[n];
+                for (int i=0;i<n;i++)
+                {
+                    temp[indices[i]] = s[i];
+                }
+
+
+                return new string(temp);
             }
             catch (Exception e)
             {
