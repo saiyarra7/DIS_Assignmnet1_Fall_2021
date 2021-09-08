@@ -59,7 +59,7 @@ namespace DIS_Assignmnet1_Fall_2021
             String word2 = "aiohn";
             int[] indices = { 3, 1, 4, 2, 0 };
             String rotated_string = RestoreString(word2, indices);
-            Console.WriteLine("The Final string after rotation is", rotated_string);
+            Console.WriteLine("The Final string after rotation is " + rotated_string);
 
 
             //Quesiton 6:
@@ -103,7 +103,7 @@ namespace DIS_Assignmnet1_Fall_2021
                 int countsh = 0;
                 for (int i = 0; i < half; i++)
                 {
-                    if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')
+                    if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')//checking if the first half of the alphabets in string are vowels  
                     {
                         countfh++;
                     }
@@ -111,7 +111,7 @@ namespace DIS_Assignmnet1_Fall_2021
 
                 for (int i = half; i < s.Length; i++)
                 {
-                    if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')
+                    if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')//checking if the second half of the alphabets in string are vowels  
 
                     {
                         countsh++;
@@ -125,7 +125,7 @@ namespace DIS_Assignmnet1_Fall_2021
                 {
                     return false;
                 }
-                return false;
+                
             }
             catch (Exception)
             {
@@ -194,17 +194,17 @@ Note: Use of String function (Contains) and hasmap is not allowed, think of othe
             try
             {
                 // write your code here
-                //As this is a stright forward question we can sumup all the values for each customer. i.e sum of all items in row i and check which row, i.e i has the 
+                //As this is a stright forward question we can sum up all the values for each customer. i.e sum of all items in row i and check which row, i.e i has the 
                 //highest value.
                 {
                     int max = 0;
                     
-                    for (int i = 0; i < accounts.Length; i++)
+                    for (int i = 0; i < accounts.GetLength(0); i++)
                     {
                         int temp = 0;
-                        for (int j=0;j<accounts[i].Length;j++)
+                        for (int j=0; j<accounts.GetLength(1); j++)
                         {
-                            temp = temp + accounts[i][j];
+                            temp = temp + accounts[i,j];
                         }
                         if (temp > max)
                             max = temp;
@@ -246,12 +246,15 @@ Constraints:
             try
             {
                 // write your code here.
+				// Here we can initiate two for loops where we iterate over the initial loop to fetch each character 
+                //in jewels and then we iterate over the inner loop to caliculate the number of matching jewels and 
+               // stones.
                 int count = 0;
                 for (int i=0;i< jewels.Length;i++)
                 {
                     for(int j=0;j<stones.Length; j++)
                     {
-                        if (jewels[j]== stones[i])
+                        if (jewels[i]== stones[j])
                         {
                             count++;
                         }
@@ -287,11 +290,12 @@ Constraints:
             try
             {
                 // write your code here.
+				// Here we can simply use a single loop to change the indices of the original stirng.
                 int n = s.Length;
                 char[] temp = new char[n];
                 for (int i=0;i<n;i++)
                 {
-                    temp[indices[i]] = s[i];
+                    temp[indices[i]] = s[i];//changing the indices.
                 }
 
 
@@ -327,20 +331,34 @@ nums       index     target
 3            2        [0,1,3,2]
 4            1        [0,4,1,3,2]
 */
+        
         private static int[] CreateTargetArray(int[] nums, int[] index)
         {
             try
             {
 
-                List<int> target = new List<int>();
-                for (int i = 0; i < nums.Length; i++)
                 {
-                    target.Insert(index[i], nums[i]);
+                    //For this question initially we will have to insert the values in an array if the index repeats again we will have to 
+                    //move the existing elements in the array to one position and then do the insertion of the elements.
+                    int len = nums.Length;
+                    int[] result = new int[len];
+                    for (int i = 0; i < len; i++)
+                    {
+                        if (index[i] == i)
+                        {
+                            result[i] = nums[i];
+                        }
+                        else
+                        {
+                            for (int j = i; j > index[i]; j--)//moving the elements.
+                            {
+                                result[j] = result[j - 1];
+                            }
+                            result[index[i]] = nums[i];
+                        }
+                    }
+                    return result;
                 }
-
-
-
-                return target.ToArray();
             }
             catch (Exception)
             {
@@ -351,3 +369,10 @@ nums       index     target
         }
     }
 }
+
+
+
+/*This assignment was a good learning for me, initially it took me sometime to get the gist of the assignment but i definitely learned a lot about 
+string manipulation, arrays, loops and somefunctions like lenght etc . 
+ For recommendations microsoft's official documentation "https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/ " was very helpful apart from c# course 
+ from geeks for geeks.*/
